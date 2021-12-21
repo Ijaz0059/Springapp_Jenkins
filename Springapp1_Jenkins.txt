@@ -1,0 +1,58 @@
+		SPring_App1 deployment using Jenkins in Amazon Linux
+
+
+1) sudo yum install java-11
+
+2) Install and config Maven
+	- cd /opt
+	- sudo wget https://dlcdn.apache.org/maven/maven-3/3.8.4/binaries/apache-maven-3.8.4-bin.zip
+	- sudo unzip apache-maven-3.8.4-bin.zip
+	- cd ~
+	- ll -a
+	- sudo vi .bashrc
+	- Paste the following "export PATH=/opt/apache-maven-3.8.4/bin:$PATH" and save and exit
+	- source .bashrc
+	- mvn -v
+
+3) sudo yum install git
+
+4) Download jenkins package
+	- for amazon linux "sudo amazon-linux-extras install epel"
+		or
+	- for redhat "sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
+
+	- sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+	- sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
+5) Install Jenkin
+	- sudo yum install jenkins
+
+6) Start Jenkins
+	- sudo systemctl start jenkins
+
+7) check status of jenkins if required
+	- systemctl status jenkins.service
+
+Note: By default port no 8080 will be assigned for jenkins.
+
+8) Change the port if required
+	- sudo vim /etc/sysconfig/jenkins (port 8090)
+	- sudo systemctl restart jenkins
+
+9) Add Github Integration Plugin
+
+10) Add Maven Integration Plugin
+
+11) Add Github Authentication Plugin
+
+12) git(executable) path in global tool configuration :- /usr/bin/git
+
+13) mvn(executable) path in global tool configuration :- /opt/apache-maven-3.8.4
+
+14) java(executable) path in global tool configuration :- /usr/lib/jvm/java-11-amazon-corretto.x86_64
+
+15) In job configuration post step:-
+	- In Execute shell "cd /var/lib/jenkins/workspace/springboot1/target"
+			   "java -jar *.jar" (star indicates all files with dot extension)
+
+
